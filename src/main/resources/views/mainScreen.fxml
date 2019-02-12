@@ -1,0 +1,56 @@
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.GridPane?>
+
+<?import javafx.scene.layout.ColumnConstraints?>
+<GridPane fx:controller="main.draft.simulator.MainScreenController"
+          xmlns:fx="http://javafx.com/fxml" alignment="TOP_CENTER" fx:id="gridPane">
+    <VBox styleClass="vbox" prefWidth="1024">
+        <HBox styleClass="menuButtons">
+            <Button text="CREATE DRAFT" fx:id="createDraftButton" onMouseClicked="#handleCreateDraftOnClick"/>
+            <Button text="JOIN DRAFT" fx:id="joinDraftButton" onMouseClicked="#handleJoinDraftOnClick"/>
+        </HBox>
+        <GridPane>
+            <columnConstraints>
+                <ColumnConstraints percentWidth="100"/>
+            </columnConstraints>
+            <VBox fx:id="createDraftVBox" styleClass="innerVBox" visible="false">
+                <VBox>
+                    <Label>FIRST TEAM</Label>
+                    <TextField fx:id="firstTeam"/>
+                </VBox>
+                <VBox>
+                    <Label>SECOND TEAM</Label>
+                    <TextField fx:id="secondTeam"/>
+                </VBox>
+                <VBox>
+                    <Label>MATCH NAME</Label>
+                    <TextField fx:id="matchName"/>
+                </VBox>
+                <Button onMouseClicked="#handleCreateDraftOkOnClick">OK</Button>
+            </VBox>
+            <VBox fx:id="joinDraftVBox" styleClass="innerVBox" visible="false">
+                <VBox>
+                    <Label>DRAFT URL</Label>
+                    <TextField fx:id="draftUrl"/>
+                </VBox>
+                <Button onMouseClicked="#handleJoinDraftOkOnClick">OK</Button>
+            </VBox>
+            <VBox fx:id="urlsVBox" styleClass="innerVBox" visible="false">
+                <VBox>
+                    <Label>BLUE TEAM URL</Label>
+                    <TextField fx:id="team1Url" editable="false" styleClass=""/>
+                    <Label>RED TEAM URL</Label>
+                    <TextField fx:id="team2Url" editable="false" styleClass=""/>
+                    <Label>AUDIENCE URL</Label>
+                    <TextField fx:id="audienceUrl" editable="false" styleClass=""/>
+                </VBox>
+                <Button onMouseClicked="#handleJoinTeam1OnClick">JOIN AS TEAM1</Button>
+                <Button onMouseClicked="#handleJoinTeam2OnClick">JOIN AS TEAM2</Button>
+            </VBox>
+        </GridPane>
+    </VBox>
+</GridPane>

@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import java.net.URL?>
+
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<GridPane xmlns="http://javafx.com/javafx"
+          xmlns:fx="http://javafx.com/fxml"
+          fx:controller="main.draft.simulator.DraftScreenController" alignment="CENTER">
+            <BorderPane maxHeight="768" minHeight="768" maxWidth="1024.0" minWidth="1024">
+                <top>
+                    <HBox>
+                        <Label minWidth="500" text="TEAM1" fx:id="team1" styleClass="firstTeam"/>
+                        <Label minWidth="24" text="--" fx:id="countdownClock" alignment="CENTER"/>
+                        <Label minWidth="500" text="TEAM2" fx:id="team2" alignment="CENTER_RIGHT" styleClass="secondTeam"/>
+                    </HBox>
+                </top>
+                <left>
+                    <GridPane prefWidth="200.0" maxWidth="200.0">
+                        <columnConstraints>
+                            <ColumnConstraints percentWidth="100"/>
+                        </columnConstraints>
+                        <rowConstraints>
+                            <RowConstraints percentHeight="20"/>
+                            <RowConstraints percentHeight="20"/>
+                            <RowConstraints percentHeight="20"/>
+                            <RowConstraints percentHeight="20"/>
+                            <RowConstraints percentHeight="20"/>
+                        </rowConstraints>
+                        <FlowPane styleClass="championPick" GridPane.rowIndex="0" GridPane.columnIndex="0">
+                            <Label alignment="BOTTOM_RIGHT"  fx:id="champion6">
+                                Champion 1
+                            </Label>
+                        </FlowPane>
+                        <FlowPane styleClass="championPick" GridPane.rowIndex="1" GridPane.columnIndex="0">
+                            <Label alignment="BOTTOM_RIGHT"  fx:id="champion9">
+                                Champion 2
+                            </Label>
+                        </FlowPane>
+                        <FlowPane styleClass="championPick" GridPane.rowIndex="2" GridPane.columnIndex="0">
+                            <Label alignment="BOTTOM_RIGHT"  fx:id="champion10">
+                                Champion 3
+                            </Label>
+                        </FlowPane>
+                        <FlowPane styleClass="championPick" GridPane.rowIndex="3" GridPane.columnIndex="0">
+                            <Label alignment="BOTTOM_RIGHT" fx:id="champion17">
+                                Champion 4
+                            </Label>
+                        </FlowPane>
+                        <FlowPane styleClass="championPick" GridPane.rowIndex="4" GridPane.columnIndex="0">
+                            <Label alignment="BOTTOM_RIGHT"  fx:id="champion18">
+                                Champion 5
+                            </Label>
+                        </FlowPane>
+                    </GridPane>
+                </left>
+                <center>
+                    <ScrollPane minWidth="624" fitToWidth="true">
+                        <FlowPane prefWidth="624.0" maxWidth="624.0" styleClass="flowPane" fx:id="championFlowPane">
+
+                        </FlowPane>
+                    </ScrollPane>
+                </center>
+                <right>
+                    <GridPane prefWidth="200.0" maxWidth="200.0">
+                        <columnConstraints>
+                            <ColumnConstraints percentWidth="100"/>
+                        </columnConstraints>
+                        <rowConstraints>
+                            <RowConstraints percentHeight="20"/>
+                            <RowConstraints percentHeight="20"/>
+                            <RowConstraints percentHeight="20"/>
+                            <RowConstraints percentHeight="20"/>
+                            <RowConstraints percentHeight="20"/>
+                        </rowConstraints>
+                        <FlowPane styleClass="championPick" GridPane.rowIndex="0" GridPane.columnIndex="0">
+                            <Label alignment="BOTTOM_RIGHT" fx:id="champion7" >
+                                Champion 1
+                            </Label>
+                        </FlowPane>
+                        <FlowPane styleClass="championPick" GridPane.rowIndex="1" GridPane.columnIndex="0">
+                            <Label alignment="BOTTOM_RIGHT"  fx:id="champion8">
+                                Champion 2
+                            </Label>
+                        </FlowPane>
+                        <FlowPane styleClass="championPick" GridPane.rowIndex="2" GridPane.columnIndex="0">
+                            <Label alignment="BOTTOM_RIGHT"  fx:id="champion11">
+                                Champion 3
+                            </Label>
+                        </FlowPane>
+                        <FlowPane styleClass="championPick" GridPane.rowIndex="3" GridPane.columnIndex="0">
+                            <Label alignment="BOTTOM_RIGHT" fx:id="champion16">
+                                Champion 4
+                            </Label>
+                        </FlowPane>
+                        <FlowPane styleClass="championPick" GridPane.rowIndex="4" GridPane.columnIndex="0">
+                            <Label alignment="BOTTOM_RIGHT"  fx:id="champion19">
+                                Champion 5
+                            </Label>
+                        </FlowPane>
+                    </GridPane>
+                </right>
+                <bottom>
+                    <VBox alignment="CENTER">
+                        <HBox>
+                            <Label minWidth="512">BLUE TEAM BANS</Label>
+                            <Label minWidth="512" alignment="CENTER_RIGHT">RED TEAM BANS</Label>
+                        </HBox>
+                        <HBox>
+                            <VBox prefWidth="512">
+                                <Label fx:id="champion0">
+                                </Label>
+                                <Label fx:id="champion2"/>
+                                <Label fx:id="champion4"/>
+                                <Label fx:id="champion13"/>
+                                <Label fx:id="champion15"/>
+                            </VBox>
+                            <VBox prefWidth="512" alignment="TOP_RIGHT">
+                                <Label fx:id="champion1"/>
+                                <Label fx:id="champion3"/>
+                                <Label fx:id="champion5"/>
+                                <Label fx:id="champion12"/>
+                                <Label fx:id="champion14"/>
+                            </VBox>
+                        </HBox>
+                        <GridPane styleClass="bordered" alignment="CENTER">
+                            <Button fx:id="readyButton" visible="false" onMouseClicked="#handleReadyOnClick">
+                                Ready
+                            </Button>
+                            <Button fx:id="chooseButton" visible="false" onMouseClicked="#handleChooseOnClick">
+                                Choose
+                            </Button>
+                        </GridPane>
+                    </VBox>
+                </bottom>
+            </BorderPane>
+</GridPane>

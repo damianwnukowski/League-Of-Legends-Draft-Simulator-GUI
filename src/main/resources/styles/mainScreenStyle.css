@@ -1,0 +1,91 @@
+
+.root{
+    -fx-background-color: #15171b ;
+    -fx-padding: 10px;
+    -fx-spacing: 10px;
+    -fx-pref-width: 1024px;
+}
+
+.label{
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 18px;
+}
+
+.text-field{
+    -fx-font-size: 18px;
+}
+
+.menuButtons{
+    -fx-spacing: 10px;
+    -fx-alignment: top-center;
+}
+
+.vbox{
+    -fx-spacing: 20px;
+}
+
+.championPick{
+    -fx-border-color: white;
+    -fx-border-width: 0 1 1 1;
+    -fx-padding: 0px;
+}
+
+.championPick1{ /*first should have border up as well*/
+    -fx-border-color: white;
+    -fx-border-width: 1 1 1 1;
+    -fx-padding: 0px;
+}
+
+.button{
+    -fx-background-color: #515151;
+    -fx-font-weight: bold;
+    -fx-font-size: 20px;
+    -fx-text-fill: #000;
+
+}
+
+.button:hover{
+    -fx-background-color: #666666;
+}
+
+.bordered{
+    -fx-border-color: white;
+    -fx-border-width: 1;
+    -fx-border-style: dashed;
+    -fx-background-color: red;
+}
+
+.innerVBox{
+    -fx-spacing: 20px;
+    -fx-alignment: top-center;
+}
+
+.firstTeam{
+    -fx-background-color: #0a4264;
+    -fx-text-fill: white;
+}
+
+.secondTeam{
+    -fx-background-color: #be2038;
+    -fx-text-fill: white;
+}
+
+.scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane{
+    -fx-background-color: transparent;
+}
+
+.flowPane{
+    -fx-vgap: 5px;
+    -fx-hgap: 5px;
+    -fx-padding: 5px;
+}
+
+
+#matchName{
+    -fx-background-color: white;
+}
