@@ -1,10 +1,13 @@
 package main.draft.simulator;
 
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 public class Main extends Application {
     public static String SERVER_URL = "http://localhost:8080";
@@ -13,6 +16,16 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("../../resources/views/mainScreen.fxml"));
         primaryStage.setTitle("League of Legends Draft Simulator");
+
+        //to make sure all threads will close
+        primaryStage.setOnCloseRequest(new EventHandler<>() {
+            @Override
+            public void handle(WindowEvent t) {
+                Platform.exit();
+                System.exit(0);
+            }
+        });
+
         Scene scene = new Scene(root);
         String css = getClass().getResource("/main/resources/styles/mainScreenStyle.css").toExternalForm();
         scene.getStylesheets().add(css);

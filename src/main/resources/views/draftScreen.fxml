@@ -1,25 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<?import java.net.URL?>
-
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.image.Image?>
 <GridPane xmlns="http://javafx.com/javafx"
           xmlns:fx="http://javafx.com/fxml"
           fx:controller="main.draft.simulator.DraftScreenController" alignment="CENTER">
             <BorderPane maxHeight="768" minHeight="768" maxWidth="1024.0" minWidth="1024">
                 <top>
-                    <HBox>
-                        <Label minWidth="500" text="TEAM1" fx:id="team1" styleClass="firstTeam"/>
-                        <Label minWidth="24" text="--" fx:id="countdownClock" alignment="CENTER"/>
-                        <Label minWidth="500" text="TEAM2" fx:id="team2" alignment="CENTER_RIGHT" styleClass="secondTeam"/>
-                    </HBox>
+                    <VBox>
+                        <Label prefWidth="1024" alignment="CENTER" fx:id="matchNameDraftController">MATCH NAME</Label>
+                        <HBox>
+                            <Label minWidth="500" text="TEAM1" fx:id="team1" styleClass="firstTeam"/>
+                            <Label minWidth="24" text="--" fx:id="countdownClock" alignment="CENTER"/>
+                            <Label minWidth="500" text="TEAM2" fx:id="team2" alignment="CENTER_RIGHT" styleClass="secondTeam"/>
+                        </HBox>
+                    </VBox>
                 </top>
                 <left>
                     <GridPane prefWidth="200.0" maxWidth="200.0">
@@ -129,7 +125,7 @@
                                 <Label fx:id="champion14"/>
                             </VBox>
                         </HBox>
-                        <GridPane styleClass="bordered" alignment="CENTER">
+                        <GridPane alignment="CENTER">
                             <Button fx:id="readyButton" visible="false" onMouseClicked="#handleReadyOnClick">
                                 Ready
                             </Button>

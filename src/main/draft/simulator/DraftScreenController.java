@@ -1,11 +1,15 @@
 package main.draft.simulator;
 
 import javafx.application.Platform;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseDragEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -15,10 +19,12 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.HttpClients;
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.URLEncoder;
 import java.util.*;
 
 public class DraftScreenController {
@@ -26,14 +32,17 @@ public class DraftScreenController {
     @FXML
     Label champion0,champion1,champion2,champion3,champion4,champion5,champion6,champion7,champion8,champion9,
             champion10,champion11,champion12,champion13,champion14,champion15,champion16,champion17,champion18,
-            champion19, countdownClock, team1, team2;
+            champion19, countdownClock, team1, team2, matchNameDraftController;
     @FXML
     Button readyButton, chooseButton;
+
 
     @FXML
     FlowPane championFlowPane;
 
     ArrayList<Label> champions;
+    ArrayList<String> pickedChampions;
+    Label activeChampion;
 
     private Timer timer;
     int turn;
@@ -60,13 +69,15 @@ public class DraftScreenController {
     public void setDraft(Team team, String url){
         this.url = url;
         this.team = team;
+        pickedChampions = new ArrayList<>();
 
         new Thread(() -> {
             HttpClient httpclient = HttpClients.createDefault();
             HttpGet httpGet = new HttpGet(Main.SERVER_URL+url);
-            boolean refresh = true;
             while(true)
             try {
+                if(turn==21) //do not refresh after having retrieving last turn
+                    break;
                 Thread.sleep(500);
                 HttpResponse response = httpclient.execute(httpGet);
                 HttpEntity entity = response.getEntity();
@@ -84,6 +95,15 @@ public class DraftScreenController {
                     boolean team1Ready = jsonObject.getBoolean("team1Ready");
                     boolean team2Ready = jsonObject.getBoolean("team2Ready");
 
+                    turn = jsonObject.getInt("turn");
+
+                    JSONArray arr = jsonObject.getJSONArray("choices");
+                    for(int i =0; i<turn-1; i++){
+                        if(arr.getString(i)!=null){
+                            pickedChampions.add(arr.getString(i));
+                        }
+                    }
+
                     //Because all UI changes should be made in UI thread
                     Platform.runLater(new Runnable() {
                         @Override
@@ -93,6 +113,7 @@ public class DraftScreenController {
                                 if (timeRemaining > 0 & timeRemaining <= 27)
                                     countdownClock.setText(Integer.toString((int) timeRemaining));
 
+                                matchNameDraftController.setText(jsonObject.getString("matchName"));
 
                                 //green when our team is ready and enemies' isn't
                                 //gray when our team is not ready
@@ -113,15 +134,29 @@ public class DraftScreenController {
                                     readyButton.setVisible(true);
                                 }
 
-                                int turnMapping=-1;
-                                turn = jsonObject.getInt("turn");
+                                EventHandler<MouseEvent> emptyEvent = new EventHandler<MouseEvent>() {
+                                    @Override
+                                    public void handle(MouseEvent event) {
 
-                                if(turn>0 && turn<20)
+                                    }
+                                };
+
+                                for (Label champion: champions){
+                                    if(pickedChampions.contains(champion.getText())){
+                                        champion.setOnMouseEntered(emptyEvent);
+                                        champion.setOnMouseExited(emptyEvent);
+                                        champion.setOnMouseClicked(emptyEvent);
+                                        champion.setStyle("-fx-background-color: gray; -fx-text-fill: black");
+                                    }
+                                }
+
+                                int turnMapping=-1;
+
+                                if(turn>0 && turn<=20)
                                     turnMapping = jsonObject.getJSONArray("TURN_MAPPING").getInt(turn-1);
 
 
                                 if(turnMapping!=-1){
-                                    System.out.println("xd");
                                     chooseButton.setVisible(true);
                                     if(team==Team.TEAM1 && turnMapping == 1){
                                         chooseButton.setStyle("-fx-background-color: #ffd700");
@@ -164,8 +199,7 @@ public class DraftScreenController {
                     });
                 }
             } catch (Exception ex) {
-                //do nothing, if getString will return null we won check further and it is good because
-                //next ones are also null
+                ex.printStackTrace();
             }
         }).start();
 
@@ -194,18 +228,25 @@ public class DraftScreenController {
                 Label champion;
 
                 String cssstyle;
-                if(team==Team.AUDIENCE)
+                if(team==Team.AUDIENCE) {
                     cssstyle = "-fx-background-color: gray; -fx-text-fill: black";
-                else{
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        champion = new Label(jsonArray.getString(i));
+                        champion.setStyle(cssstyle);
+                        champions.add(champion);
+                        championFlowPane.getChildren().add(champion);
+                    }
+                } else{
                     cssstyle = "-fx-background-color: white; -fx-text-fill: black";
-                }
-
-                for(int i=0; i<jsonArray.length(); i++){
-                    champion = new Label(jsonArray.getString(i));
-                    //champion.addEventHandler( );
-                    champion.setStyle(cssstyle);
-                    champions.add(champion);
-                    championFlowPane.getChildren().add(champion);
+                    for(int i=0; i<jsonArray.length(); i++){
+                        champion = new Label(jsonArray.getString(i));
+                        champion.setOnMouseEntered(new championOnMouseEntered(champion));
+                        champion.setOnMouseExited(new championOnMouseExited(champion));
+                        champion.setOnMouseClicked(new championOnMouseClicked(champion));
+                        champion.setStyle(cssstyle);
+                        champions.add(champion);
+                        championFlowPane.getChildren().add(champion);
+                    }
                 }
             }
         }catch (Exception ex){
@@ -214,13 +255,67 @@ public class DraftScreenController {
 
     }
 
-    public void handleChooseOnClick() {
-        HttpClient httpclient = HttpClients.createDefault();
-        HttpPost httpPost = new HttpPost(Main.SERVER_URL + url + "choose");
+    private class championOnMouseEntered implements EventHandler<MouseEvent> {
+        Label champion;
+        public championOnMouseEntered(Label champion){
+            this.champion = champion;
+        }
+        @Override
+        public void handle(MouseEvent event) {
+            if(champion!=activeChampion)
+                champion.setStyle("-fx-background-color: #8ac3ff; -fx-text-fill: black");
+        }
+    }
 
+    private class championOnMouseExited implements EventHandler<MouseEvent> {
+        Label champion;
+        public championOnMouseExited(Label champion){
+            this.champion = champion;
+        }
+        @Override
+        public void handle(MouseEvent event) {
+            if(champion!=activeChampion)
+                champion.setStyle("-fx-background-color: white; -fx-text-fill: black");
+        }
+    }
+
+    private class championOnMouseClicked implements EventHandler<MouseEvent> {
+        Label champion;
+        public championOnMouseClicked(Label champion){
+            this.champion = champion;
+        }
+        @Override
+        public void handle(MouseEvent event) {
+            if(champion!=activeChampion) {
+                if(activeChampion!=null){
+                    activeChampion.setStyle("-fx-background-color: white; -fx-text-fill: black");
+                }
+                champion.setStyle("-fx-background-color: #007BFF");
+                activeChampion = champion;
+            }else {
+                activeChampion = null;
+                champion.setStyle("-fx-background-color: white; -fx-text-fill: black");
+            }
+        }
+    }
+
+    public void handleChooseOnClick() {
+        if(activeChampion==null)
+            return;
+        HttpClient httpclient = HttpClients.createDefault();
+        HttpPost httpPost = new HttpPost(Main.SERVER_URL + url + "/choose");
+        ArrayList<NameValuePair> input = new ArrayList<>(2);
+        input.add(new BasicNameValuePair("champion", activeChampion.getText()));
+        input.add(new BasicNameValuePair("turn", Integer.toString(turn)));
+        try {
+            httpPost.setEntity(new UrlEncodedFormEntity(input, "UTF-8"));
+            httpclient.execute(httpPost);
+        }catch (Exception ex){
+            Alert a = new Alert(Alert.AlertType.ERROR, ex.toString());
+        }
     }
 
     public enum Team{
-        TEAM1, TEAM2, AUDIENCE;
+        TEAM1, TEAM2, AUDIENCE
     }
 }

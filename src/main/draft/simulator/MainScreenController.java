@@ -60,11 +60,11 @@ public class MainScreenController {
     }
 
     public void handleJoinTeam1OnClick(){
-
+        joinTeam(team1Url.getText());
     }
 
     public void handleJoinTeam2OnClick(){
-
+        joinTeam(team2Url.getText());
     }
 
     public void joinTeam(String url){
@@ -111,13 +111,12 @@ public class MainScreenController {
         }
     }
 
-    //TODO change hardcoded string
     public void handleCreateDraftOkOnClick(){
         try {
             HttpClient httpclient = HttpClients.createDefault();
             HttpPost httppost = new HttpPost(Main.SERVER_URL+"/api/draft/createDraft");
 
-            List<NameValuePair> params = new ArrayList<NameValuePair>(3);
+            List<NameValuePair> params = new ArrayList<>(3);
             params.add(new BasicNameValuePair("team1", firstTeam.getText()));
             params.add(new BasicNameValuePair("team2", secondTeam.getText()));
             params.add(new BasicNameValuePair("matchName", matchName.getText()));
@@ -135,8 +134,8 @@ public class MainScreenController {
                 }
                 JSONObject obj = new JSONObject(result.toString());
                 team1Url.setText(obj.getString("team1url"));
-                team2Url.setText(obj.getString("team2url").toString());
-                audienceUrl.setText(obj.getString("audienceUrl").toString());
+                team2Url.setText(obj.getString("team2url"));
+                audienceUrl.setText(obj.getString("audienceUrl"));
                 joinDraftVBox.setVisible(false);
                 createDraftVBox.setVisible(false);
                 createDraftButton.setStyle("-fx-background-color: #515151");
