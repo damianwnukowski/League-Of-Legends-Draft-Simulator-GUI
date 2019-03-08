@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.GridPane?>
 
 <?import javafx.scene.layout.ColumnConstraints?>
-<GridPane fx:controller="main.draft.simulator.MainScreenController"
+<GridPane fx:controller="draft.simulator.gui.MainScreenController"
           xmlns:fx="http://javafx.com/fxml" alignment="TOP_CENTER" fx:id="gridPane">
     <VBox styleClass="vbox" prefWidth="1024">
         <HBox styleClass="menuButtons">

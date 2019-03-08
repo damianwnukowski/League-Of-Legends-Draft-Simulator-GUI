@@ -1,4 +1,4 @@
-package main.draft.simulator;
+package draft.simulator.gui;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

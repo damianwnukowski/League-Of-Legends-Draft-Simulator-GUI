@@ -1,4 +1,4 @@
-package main.draft.simulator;
+package draft.simulator.gui;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -14,7 +14,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("../../resources/views/mainScreen.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/views/mainScreen.fxml"));
         primaryStage.setTitle("League of Legends Draft Simulator");
 
         //to make sure all threads will close
@@ -27,7 +27,7 @@ public class Main extends Application {
         });
 
         Scene scene = new Scene(root);
-        String css = getClass().getResource("/main/resources/styles/mainScreenStyle.css").toExternalForm();
+        String css = getClass().getResource("/styles/mainScreenStyle.css").toExternalForm();
         scene.getStylesheets().add(css);
         primaryStage.setScene(scene);
         primaryStage.setMaximized(true);

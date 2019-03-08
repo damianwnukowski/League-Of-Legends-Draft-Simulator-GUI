@@ -5,7 +5,7 @@
 
 <GridPane xmlns="http://javafx.com/javafx"
           xmlns:fx="http://javafx.com/fxml"
-          fx:controller="main.draft.simulator.DraftScreenController" alignment="CENTER">
+          fx:controller="draft.simulator.gui.DraftScreenController" alignment="CENTER">
             <BorderPane maxHeight="768" minHeight="768" maxWidth="1024.0" minWidth="1024">
                 <top>
                     <VBox>
