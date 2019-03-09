@@ -18,7 +18,7 @@ public class Main extends Application {
         primaryStage.setTitle("League of Legends Draft Simulator");
 
         //to make sure all threads will close
-        primaryStage.setOnCloseRequest(new EventHandler<>() {
+        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent t) {
                 Platform.exit();
