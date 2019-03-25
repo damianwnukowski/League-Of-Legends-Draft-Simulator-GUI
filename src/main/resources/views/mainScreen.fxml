@@ -42,14 +42,14 @@
             <VBox fx:id="urlsVBox" styleClass="innerVBox" visible="false">
                 <VBox>
                     <Label>BLUE TEAM URL</Label>
-                    <TextField fx:id="team1Url" editable="false" styleClass=""/>
+                    <TextField fx:id="team1Url" editable="false" styleClass="firstTeam"/>
                     <Label>RED TEAM URL</Label>
-                    <TextField fx:id="team2Url" editable="false" styleClass=""/>
+                    <TextField fx:id="team2Url" editable="false" styleClass="secondTeam"/>
                     <Label>AUDIENCE URL</Label>
                     <TextField fx:id="audienceUrl" editable="false" styleClass=""/>
                 </VBox>
-                <Button onMouseClicked="#handleJoinTeam1OnClick">JOIN AS TEAM1</Button>
-                <Button onMouseClicked="#handleJoinTeam2OnClick">JOIN AS TEAM2</Button>
+                <Button onMouseClicked="#handleJoinTeam1OnClick">JOIN AS BLUE TEAM</Button>
+                <Button onMouseClicked="#handleJoinTeam2OnClick">JOIN AS RED TEAM</Button>
             </VBox>
         </GridPane>
     </VBox>

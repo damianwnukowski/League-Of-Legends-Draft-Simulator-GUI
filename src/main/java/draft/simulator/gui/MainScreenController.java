@@ -98,7 +98,7 @@ public class MainScreenController {
             }
 
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/resources/views/draftScreen.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/draftScreen.fxml"));
             Parent root = loader.load();
             DraftScreenController controller = loader.getController();
             controller.setDraft(team, url);

@@ -43,8 +43,8 @@ public class DraftScreenController {
     ArrayList<String> pickedChampions;
     Label activeChampion;
 
-    private Timer timer;
     int turn;
+    Thread t;
 
     private Team team;
     private String url;
@@ -70,7 +70,7 @@ public class DraftScreenController {
         this.team = team;
         pickedChampions = new ArrayList<>();
 
-        new Thread(() -> {
+        t = new Thread(() -> {
             HttpClient httpclient = HttpClients.createDefault();
             HttpGet httpGet = new HttpGet(Main.SERVER_URL+url);
             while(true)
@@ -200,7 +200,8 @@ public class DraftScreenController {
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
-        }).start();
+        });
+        t.start();
 
         initChampionFlowPane();
     }
